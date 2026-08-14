@@ -87,11 +87,11 @@ def test_transform_sf_into_required_layout_mxfp4_recipe() -> None:
     # The (1, 32) UE8M0 branch of transform_sf_into_required_layout only
     # exists on SM100 (SM90 uses the (1, 128) FP32 TMA layout; SM120 support
     # lives on the sgl-project fork, see sgl-project/DeepGEMM).
+    print('Testing transform_sf_into_required_layout (MXFP4, recipe (1, 32)):')
     if get_arch_major() in (9, 12):
         print(' > Skipped ((1, 32) UE8M0 layout transform is SM100-only upstream)')
         return
 
-    print('Testing transform_sf_into_required_layout (MXFP4, recipe (1, 32)):')
     for num_groups, mn, k in [(1, 3072, 3584), (4, 1024, 3584), (8, 3072, 7168)]:
         # Exponent-only FP32 values (0.5 -> 0x3f000000) are valid UE8M0
         # payloads; the pack kernels assert zero sign/mantissa bits.
